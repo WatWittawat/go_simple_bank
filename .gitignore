@@ -40,3 +40,6 @@ docker-compose.override.yml
 # Environment files
 .env
 .env.*
+
+# sqlc generated cache or local db
+.sqlc-dev.db
