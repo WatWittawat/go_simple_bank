@@ -42,6 +42,9 @@ jobs:
           sudo mv migrate.linux-amd64 /usr/bin/migrate
           which migrate
 
+      - name: Tidy Go Modules
+        run: go mod tidy
+
       - name: Run migrations
         run: make migrateup
 
