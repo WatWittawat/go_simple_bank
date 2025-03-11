@@ -7,7 +7,6 @@ import (
 	db "github.com/WatWittawat/go_simple_bank/db/sqlc"
 	"github.com/WatWittawat/go_simple_bank/utils"
 	"github.com/gin-gonic/gin"
-	"github.com/lib/pq"
 )
 
 type createUserParams struct {
@@ -47,12 +46,9 @@ func (server *Server) createUser(ctx *gin.Context) {
 
 	user, err := server.store.CreateUser(ctx, args)
 	if err != nil {
-		if pqErr, ok := err.(*pq.Error); ok {
-			switch pqErr.Code.Name() {
-			case "unique_violation":
-				ctx.JSON(http.StatusConflict, errorResponse(err))
-				return
-			}
+		if db.ErrorCode(err) == db.UniqueViolation {
+			ctx.JSON(http.StatusForbidden, errorResponse(err))
+			return
 		}
 		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
