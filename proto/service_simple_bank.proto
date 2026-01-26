@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+
+import "rpc.create_user.proto"; 
+import "rpc.login_user.proto";
+option go_package = "github.com/WatWittawat/go_simple_bank/pb";
+
+// SimpleBank service provides banking operations
+service SimpleBank {
+    // CreateUser creates a new user account
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {};
+    // LoginUser authenticates a user and returns tokens
+    rpc LoginUser (LoginUserRequest) returns (LoginUserResponse) {};
+}
