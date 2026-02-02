@@ -1,5 +1,5 @@
 # Description: Dockerfile for building the go application
-FROM golang:1.23.7-alpine3.21 AS builder
+FROM golang:1.24.0-alpine3.21 AS builder
 
 WORKDIR /app
 
@@ -16,6 +16,7 @@ COPY --from=builder /app/main .
 COPY app.env .
 COPY start.sh .
 COPY wait-for.sh .
+COPY db/migration ./db/migration
 
 
 EXPOSE 8080
