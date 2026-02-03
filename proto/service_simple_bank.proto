@@ -4,6 +4,7 @@ package pb;
 
 import "google/api/annotations.proto";
 import "rpc.create_user.proto"; 
+import "rpc.update_user.proto"; 
 import "rpc.login_user.proto";
 option go_package = "github.com/WatWittawat/go_simple_bank/pb";
 import "protoc-gen-openapiv2/options/annotations.proto";
@@ -11,7 +12,7 @@ import "protoc-gen-openapiv2/options/annotations.proto";
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {
     title: "Simple Bank API"
-    version: "1.1"
+    version: "1.2"
     contact: {
       name: "gRPC Gateway"
       url: "https://github.com/grpc-ecosystem/grpc-gateway"
@@ -31,6 +32,17 @@ service SimpleBank {
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             summary: "Create a new user account"
             description: "This endpoint allows for the creation of a new user account in the Simple Bank system."
+        };
+    };
+    // UpdateUser updates an existing user account 
+    rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {
+        option (google.api.http) = {
+            patch: "/v1/update_user"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Update an existing user account" 
+            description: "This endpoint allows for the updating of an existing user account in the Simple Bank system."
         };
     };
     // LoginUser authenticates a user and returns tokens
